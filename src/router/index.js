@@ -12,7 +12,17 @@ Vue.use(VueRouter)
     {
         path: '/usage_guide',
         name: 'usage-guide',
-        component: () => import('../views/UsageGuide.vue')
+        component: () => import('../views/UsageGuide.vue'),
+    },
+    {
+        path: '/usage_guide/new',
+        name: 'usage-guide-new',
+        component: () => import('../views/UsageGuideNew.vue'),
+    },
+    {
+        path: '/usage_guide/list',
+        name: 'usage-guide-list',
+        component: () => import('../views/UsageGuideList.vue'),
     },
     {
         path: '/thumbnail',
