@@ -5,7 +5,7 @@
                 <b-navbar type="dark" variant="info">
                     <b-navbar-brand to="/"><small>Coupon Helper</small></b-navbar-brand>
                     <b-navbar-nav>
-                        <b-nav-item to="/usage_guide">이용안내</b-nav-item>
+                        <b-nav-item to="/guide">이용안내</b-nav-item>
                         <b-nav-item to="/thumbnail">썸네일</b-nav-item>
                         <!-- <b-nav-item to="search">썸네일 검색</b-nav-item> -->
                     </b-navbar-nav>

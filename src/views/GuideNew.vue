@@ -17,16 +17,17 @@
                         </b-col>
                     </b-form-row>
                     <b-form-group v-for="(guide, key) in guides" :key="key">
-                        <b-form-input class="mb-2" type="text" placeholder="제목" v-model="guide.title" required />
-                        <b-form-textarea class="overflow-hidden" row="5" max-rows="100" placeholder="내용" v-model="guide.text" required wrap="hard" />
+                        <b-form-input class="mb-2" type="text" placeholder="문구 제목. 예) 이용 안내" v-model="guide.title" required />
+                        <b-form-textarea class="overflow-hidden" row="5" max-rows="100" placeholder="문구 내용" v-model="guide.text" required wrap="hard" />
                     </b-form-group>
                     <b-form-row class="pt-3 border-top">
                         <b-col>
-                            <b-btn class="mr-2" @click="removeGuide()" variant="danger">삭제</b-btn>
-                            <b-btn class="mr-2" @click="addGuide()" variant="primary">추가</b-btn>
+                            <b-btn class="mr-2" @click="removeGuide()" variant="secondary">문구 삭제</b-btn>
+                            <b-btn class="mr-2" @click="addGuide()" variant="primary">문구 추가</b-btn>
                         </b-col>
                         <b-col class="text-right">
-                            <b-btn type="submit" variant="primary">등록</b-btn>
+                            <b-btn class="ml-2" variant="secondary" @click="gotoList">목록으로</b-btn>
+                            <b-btn class="ml-2" type="submit" variant="primary">등록</b-btn>
                         </b-col>
                     </b-form-row>
                 </b-form>
@@ -40,6 +41,7 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 
 export default {
+    name: 'guide-new',
     data: function() {
         return {
             title: null,
@@ -53,6 +55,9 @@ export default {
         }
     },
     methods: {
+        gotoList: function() {
+            this.$router.go(-1)
+        },
         addGuide: function() {
             this.guides.push({
                 title: null,
@@ -70,13 +75,13 @@ export default {
                 title: this.title,
                 writer: this.writer,
                 guides: this.guides,
-                createAt: firebase.firestore.FieldValue.serverTimestamp()
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
             }).then((doc) => {
                 db.collection('brands').doc(doc.id).collection('histories').add({
                     title: this.title,
                     writer: this.writer,   
                     guides: this.guides,
-                    createAt: firebase.firestore.FieldValue.serverTimestamp()
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 }).then(() => {
                     this.$router.push('/')    
                 }).catch((error) => {

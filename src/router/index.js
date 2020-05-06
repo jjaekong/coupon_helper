@@ -6,23 +6,28 @@ Vue.use(VueRouter)
     const routes = [
     {
         path: '/',
-        name: 'usage-guide',
-        component: () => import('../views/UsageGuide.vue')
+        name: 'guide',
+        component: () => import('../views/Guide.vue')
     },
     {
-        path: '/usage_guide',
-        name: 'usage-guide',
-        component: () => import('../views/UsageGuide.vue'),
+        path: '/guide',
+        name: 'guide',
+        component: () => import('../views/Guide.vue'),
     },
     {
-        path: '/usage_guide/new',
-        name: 'usage-guide-new',
-        component: () => import('../views/UsageGuideNew.vue'),
+        path: '/guide/new',
+        name: 'guide-new',
+        component: () => import('../views/GuideNew.vue'),
     },
     {
-        path: '/usage_guide/list',
-        name: 'usage-guide-list',
-        component: () => import('../views/UsageGuideList.vue'),
+        path: '/guide/list',
+        name: 'guide-list',
+        component: () => import('../views/GuideList.vue'),
+    },
+    {
+        path: '/guide/:id',
+        name: 'guide-edit',
+        component: () => import('../views/GuideEdit.vue'),
     },
     {
         path: '/thumbnail',

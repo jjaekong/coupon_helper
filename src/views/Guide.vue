@@ -1,5 +1,5 @@
 <template>
-    <div class="usage-guide">
+    <div class="guide">
 
         <div class="steps border-bottom text-left">
             <b-container>
@@ -9,28 +9,35 @@
                             <template v-slot:header>
                                 <h6>넓이 <small class="text-muted">(alt + w, 화살표로 넓이 선택)</small></h6>
                             </template>
-                            <b-form-group>
-                                <b-form-radio-group v-model="width" size="sm">
-                                    <b-form-radio :value="684" accesskey="w">684</b-form-radio>
-                                    <b-form-radio :value="758" accesskey="w">758</b-form-radio>
-                                    <b-form-radio :value="770" accesskey="w">770</b-form-radio>
-                                    <b-form-radio :value="860" accesskey="w">860</b-form-radio>
-                                </b-form-radio-group>
-                            </b-form-group>
+                            <b-row no-gutters>
+                                <b-col cols="9" class="d-flex align-items-center">
+                                    <b-form-group class="mb-0">
+                                        <b-form-radio-group v-model="width" size="sm">
+                                            <b-form-radio :value="684" accesskey="w">684</b-form-radio>
+                                            <b-form-radio :value="758" accesskey="w">758</b-form-radio>
+                                            <b-form-radio :value="770" accesskey="w">770</b-form-radio>
+                                            <b-form-radio :value="860" accesskey="w">860</b-form-radio>
+                                        </b-form-radio-group>
+                                    </b-form-group>
+                                </b-col>
+                                <b-col>
+                                    <b-form-group class="mb-0">
+                                        <b-form-input type="number" min="0" max="1028" v-model="width" style="width: 100%;" size="sm" />
+                                    </b-form-group>
+                                </b-col>
+                            </b-row>
                         </b-card>
                     </b-col>
                     <b-col>
                         <b-card class="border-right rounded-0" style="border: 0; height: 8rem;" header-class="d-flex align-items-center">
                             <template v-slot:header>
                                 <h6>문구 <small class="text-muted">(alt + q)</small></h6>
-                                <b-btn size="sm" variant="link" class="ml-auto border-0 p-0 text-dark" to="/usage_guide/new"><b>새로 추가</b></b-btn>
-                                <b-btn size="sm" variant="link" class="ml-3 border-0 p-0 text-dark" to="/usage_guide/list"><b>목록</b></b-btn>
+                                <b-btn size="sm" variant="link" class="ml-auto border-0 p-0 text-dark" to="/guide/new"><b>새로 추가</b></b-btn>
+                                <b-btn size="sm" variant="link" class="ml-3 border-0 p-0 text-dark" to="/guide/list"><b>목록</b></b-btn>
                             </template>
                             <b-form-group>
                                 <b-form-input list="brand-list" size="sm" accesskey="q" placeholder="브랜드명의 일부를 입력하고 선택하세요." v-model="brand" />
                                 <b-form-datalist id="brand-list" :options="brandOptions" />
-                                    <!-- <option v-for="(brand, key) in brands" :key="key" :value="brand.id">{{brand.title}}</option>
-                                </b-form-datalist> -->
                             </b-form-group>
                         </b-card>
                     </b-col>
@@ -48,37 +55,27 @@
             </b-container>
         </div>
 
-        <b-container class="my-4 position-relative" v-if="width > 0 && selectedBrand != null">
-
-            <b-dropdown class="controls position-absolute" style="top: 0; right: 15px;" no-caret size="sm" toggle-class="p-2" menu-class="shadow" variant="info" right>
-                <template v-slot:button-content>
-                    <b-icon icon="list" />
-                </template>
-                <b-dd-item style="font-size: .9rem;" @click="addTextarea()">전체 내용 저장</b-dd-item>
-                <b-dd-item style="font-size: .9rem;" @click="saveAllGuideToImage()">전체 이미지 저장</b-dd-item>
-                <b-dd-divider />
-                <b-dd-item style="font-size: .9rem;" @click="addGuide()">문구 영역 추가</b-dd-item>
-            </b-dropdown>
+        <b-container class="my-4" v-if="width > 0 && selectedBrand != null">
 
             <b-card no-body class="mx-auto border-secondary" :style="'width: calc('+ width +'px + 2px + 1.25rem * 2); padding: 1.25rem'">
 
-                <div class="preview">
+                <div class="preview text-left">
                     <b-card-img :src="banner" v-if="banner" class="rounded-0" style="margin-bottom: 30px;" />
                     <b-card-body class="guide py-0 position-relative" :style="'width: calc('+ width +'px); margin-bottom: 30px; padding-left: 20px; padding-right: 20px; border: 1px dashed #ccc;'" v-for="(guide, key) in selectedBrand.guides" :key="key">
-                        <b-form-group class="mb-0">
+                        <!-- <b-form-group class="mb-0">
                             <b-form-input type="text" class="border-0 px-0 rounded-0" style="border-bottom: 2px solid #2a2a2a !important; line-height: 45px; font-size: 22px; color: #2a2a2a; font-weight: 700;" v-model="guide.title" />
-                        </b-form-group>
-                        <b-form-group>
-                            <b-form-textarea row="1" max-rows="100" class="border-0 px-0 rounded-0 overflow-hidden" spellcheck="false" style="padding-top: 20px; padding-bottom: 20px; font-size: 16px; line-height: 26px; color: #605f5f; white-space: pre-wrap;" v-model="guide.text" wrap="hard"></b-form-textarea>
-                        </b-form-group>
+                        </b-form-group> -->
+                        <!-- <b-form-group>
+                            <b-form-textarea row="1" max-rows="100" class="border-0 px-0 rounded-0 overflow-hidden" spellcheck="false"  v-model="guide.text" wrap="hard"></b-form-textarea>
+                        </b-form-group> -->
+                        <h4 class="mb-0" style="border-bottom: 2px solid #2a2a2a !important; line-height: 45px; font-size: 22px; color: #2a2a2a; font-weight: 700;">{{guide.title}}</h4>
+                        <div style="padding-top: 20px; padding-bottom: 20px; font-size: 16px; line-height: 26px; color: #605f5f; white-space: pre-wrap;" v-text="guide.text"></div>
                         <b-dropdown class="position-absolute" style="right:0; bottom: 0;" no-caret toggle-class="p-1 border-0" menu-class="shadow" size="sm" variant="link" right>
                             <template v-slot:button-content>
                                 <b-icon icon="gear" variant="secondary" />
                             </template>
                             <b-dd-item style="font-size: .8rem;">HTML 소스보기</b-dd-item>
                             <b-dd-item style="font-size: .8rem;" @click="saveGuideToImage(key)">이미지로 저장</b-dd-item>
-                            <b-dd-divider />
-                            <b-dd-item style="font-size: .8rem;" @click="removeGuide(key)">이 영역 삭제</b-dd-item>
                         </b-dropdown>
                     </b-card-body>
                     <b-card-body class="contact">
@@ -96,6 +93,13 @@
                 </div>
 
             </b-card>
+
+            <b-row class="mt-3">
+                <b-col>
+                    <b-btn class="mx-1" @click="saveAllGuideToImage()">전체 HTML 소스보기</b-btn>
+                    <b-btn class="mx-1" @click="saveAllGuideToImage()">전체 이미지 저장</b-btn>
+                </b-col>
+            </b-row>
             
         </b-container>
 
@@ -108,8 +112,7 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 
 export default {
-    components: {
-    },
+    name: 'guide',
     data: function() {
         return {
             banner: null,
@@ -143,17 +146,6 @@ export default {
                         })
                     })
                 })
-        },
-        addGuide: function() {
-            this.selectedBrand.guides.push({
-                title: '제목',
-                text: '내용'
-            })
-        },
-        removeGuide: function(key) {
-            console.log('removeGuide', key)
-            // this.guides.splice(key, 1)
-            this.selectedBrand.guides.splice(key, 1)
         },
         selectBanner: function(file) {
             // 파일이 선택되었는지
