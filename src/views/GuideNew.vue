@@ -1,7 +1,7 @@
 <template>
     <b-container class="py-4">
         <b-card no-body :style="'width: calc('+ width +'px + 1.25rem * 2 + 2px)'" class="mx-auto">
-            <b-form @submit.prevent="addUsage">
+            <b-form @submit.prevent="addBrand">
                 <b-card-header>
                     <b-card-title class="mb-0">이용안내 등록</b-card-title>
                 </b-card-header>
@@ -97,7 +97,7 @@ export default {
         removeGuide: function() {
             this.guides.pop();
         },
-        addUsage: function() {
+        addBrand: function() {
             
             const db = firebase.firestore()
 

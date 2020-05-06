@@ -4,7 +4,7 @@
             <b-card-header>
                 <b-card-title class="mb-0">{{title}} 수정</b-card-title>
             </b-card-header>
-            <b-form @submit.prevent="editUsage">
+            <b-form @submit.prevent="editBrand">
                 <b-card-body>
                     <b-form-row>
                         <b-col>
@@ -55,7 +55,7 @@
                         </b-col>
                         <b-col class="text-right">
                             <b-btn class="ml-2" variant="secondary" @click="gotoList">목록으로</b-btn>
-                            <b-btn class="ml-2" variant="secondary" @click="deleteGuides">삭제</b-btn>
+                            <b-btn class="ml-2" variant="secondary" @click="deleteBrand">삭제</b-btn>
                             <b-btn class="ml-2" type="submit" variant="primary">수정</b-btn>
                         </b-col>
                     </b-form-row>
@@ -114,7 +114,7 @@ export default {
         removeGuide: function() {
             this.guides.pop();
         },
-        editUsage: function() {
+        editBrand: function() {
             
             const db = firebase.firestore()
 
@@ -172,7 +172,7 @@ export default {
         deleteBanner: function() {
             this.banner = null
         },
-        deleteGuides: function() {
+        deleteBrand: function() {
             if (confirm('정말 삭제하시겠습니까?')) {
                 firebase.firestore().collection('brands').doc(this.$route.params.id)
                     .set({

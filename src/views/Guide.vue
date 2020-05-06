@@ -84,7 +84,7 @@
                             <template v-slot:button-content>
                                 <b-icon icon="gear" variant="secondary" />
                             </template>
-                            <b-dd-item style="font-size: .8rem;">HTML 소스보기</b-dd-item>
+                            <b-dd-item style="font-size: .8rem;" @click="showGuideHtml(key)">HTML 소스보기</b-dd-item>
                             <b-dd-item style="font-size: .8rem;" @click="saveGuideToImage(key)">이미지로 저장</b-dd-item>
                         </b-dropdown>
                     </b-card-body>
@@ -106,8 +106,8 @@
 
             <b-row class="mt-3">
                 <b-col>
-                    <b-btn class="mx-1" @click="saveAllGuideToImage()">전체 HTML 소스보기</b-btn>
-                    <b-btn class="mx-1" @click="saveAllGuideToImage()">전체 이미지 저장</b-btn>
+                    <b-btn class="mx-1" @click="showBrandHtml()">전체 HTML 소스보기</b-btn>
+                    <b-btn class="mx-1" @click="saveBrandToImage()">전체 이미지 저장</b-btn>
                 </b-col>
             </b-row>
             
@@ -225,7 +225,7 @@ export default {
             });
 
         },
-        saveAllGuideToImage: function() {
+        saveBrandToImage: function() {
 
             const preview = document.querySelector('.preview')
             
@@ -276,6 +276,12 @@ export default {
         },
         deleteBanner: function() {
             this.selectedBrand.banner = null
+        },
+        showBrandHtml: function() {
+            console.log('showBrandHtml')
+        },
+        showGuideHtml: function(key) {
+            console.log('showGuideHtml', key)
         }
     }
 }
