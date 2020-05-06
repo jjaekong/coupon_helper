@@ -56,6 +56,7 @@ export default {
         getList: function() {
             this.items = []
             firebase.firestore().collection('brands')
+                .where('deletedAt', '==', null)
                 .orderBy('title', 'asc')
                 .get()
                 .then((querySnap) => {

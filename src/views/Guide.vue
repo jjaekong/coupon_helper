@@ -4,34 +4,10 @@
         <div class="steps border-bottom text-left">
             <b-container>
                 <b-row no-gutters>
-                    <b-col>
-                        <b-card class="border-left border-right rounded-0" style="border: 0; height: 8rem;">
+                    <b-col cols="4" class="border-left border-right">
+                        <b-card class="border-0" style="height: 8rem;" header-class="d-flex align-items-center">
                             <template v-slot:header>
-                                <h6>넓이 <small class="text-muted">(alt + w, 화살표로 넓이 선택)</small></h6>
-                            </template>
-                            <b-row no-gutters>
-                                <b-col cols="9" class="d-flex align-items-center">
-                                    <b-form-group class="mb-0">
-                                        <b-form-radio-group v-model="width" size="sm">
-                                            <b-form-radio :value="684" accesskey="w">684</b-form-radio>
-                                            <b-form-radio :value="758" accesskey="w">758</b-form-radio>
-                                            <b-form-radio :value="770" accesskey="w">770</b-form-radio>
-                                            <b-form-radio :value="860" accesskey="w">860</b-form-radio>
-                                        </b-form-radio-group>
-                                    </b-form-group>
-                                </b-col>
-                                <b-col>
-                                    <b-form-group class="mb-0">
-                                        <b-form-input type="number" min="0" max="1028" v-model="width" style="width: 100%;" size="sm" />
-                                    </b-form-group>
-                                </b-col>
-                            </b-row>
-                        </b-card>
-                    </b-col>
-                    <b-col>
-                        <b-card class="border-right rounded-0" style="border: 0; height: 8rem;" header-class="d-flex align-items-center">
-                            <template v-slot:header>
-                                <h6>문구 <small class="text-muted">(alt + q)</small></h6>
+                                <h6>문구/브랜드 <small class="text-muted">(alt + q)</small></h6>
                                 <b-btn size="sm" variant="link" class="ml-auto border-0 p-0 text-dark" to="/guide/new"><b>새로 추가</b></b-btn>
                                 <b-btn size="sm" variant="link" class="ml-3 border-0 p-0 text-dark" to="/guide/list"><b>목록</b></b-btn>
                             </template>
@@ -41,27 +17,61 @@
                             </b-form-group>
                         </b-card>
                     </b-col>
-                    <b-col>
-                        <b-card class="border-right rounded-0" style="border: 0; height: 8rem;">
+                    <b-col class="border-right">
+                        <b-card class="border-0" style="height: 8rem;">
+                            <template v-slot:header>
+                                <h6>넓이 <small class="text-muted">(alt + w, 화살표로 넓이 선택)</small></h6>
+                            </template>
+                            <b-row no-gutters v-if="selectedBrand">
+                                <b-col cols="9" class="d-flex align-items-center">
+                                    <b-form-group class="mb-0">
+                                        <b-form-radio-group v-model="selectedBrand.width" size="sm">
+                                            <b-form-radio :value="684" accesskey="w">684</b-form-radio>
+                                            <b-form-radio :value="758" accesskey="w">758</b-form-radio>
+                                            <b-form-radio :value="770" accesskey="w">770</b-form-radio>
+                                            <b-form-radio :value="860" accesskey="w">860</b-form-radio>
+                                        </b-form-radio-group>
+                                    </b-form-group>
+                                </b-col>
+                                <b-col>
+                                    <b-form-group class="mb-0">
+                                        <b-form-input type="number" min="0" max="1028" v-model="selectedBrand.width" style="width: 100%;" size="sm" />
+                                    </b-form-group>
+                                </b-col>
+                            </b-row>
+                            <b-card-text class="text-muted" v-else>먼저 브랜드를 선택하세요</b-card-text>
+                        </b-card>
+                    </b-col>
+                    <b-col class="border-right">
+                        <b-card class="border-0" style="height: 8rem;">
                             <template v-slot:header>
                                 <h6>상단 이미지 <small class="text-muted">(alt + t)</small></h6>
                             </template>
-                            <b-form-group class="mb-0">
-                                <b-form-file size="sm" accept="image/*" accesskey="t" :disabled="width <= 0 || selectedBrand == null" @input="selectBanner" />
+                            <b-form-group class="mb-0" v-if="selectedBrand">
+                                <b-form-file size="sm" accept="image/*" accesskey="t" @input="selectBanner" placeholder="상단 이미지 선택" />
                             </b-form-group>
+                            <b-card-text class="text-muted" v-else>먼저 브랜드를 선택하세요</b-card-text>
                         </b-card>
                     </b-col>
                 </b-row>
             </b-container>
         </div>
 
-        <b-container class="my-4" v-if="width > 0 && selectedBrand != null">
+        <b-container class="my-4" v-if="selectedBrand != null">
 
-            <b-card no-body class="mx-auto border-secondary" :style="'width: calc('+ width +'px + 2px + 1.25rem * 2); padding: 1.25rem'">
+            <b-card no-body class="mx-auto border-secondary" :style="'width: calc('+ selectedBrand.width +'px + 2px + 1.25rem * 2); padding: 1.25rem'">
 
                 <div class="preview text-left">
-                    <b-card-img :src="banner" v-if="banner" class="rounded-0" style="margin-bottom: 30px;" />
-                    <b-card-body class="guide py-0 position-relative" :style="'width: calc('+ width +'px); margin-bottom: 30px; padding-left: 20px; padding-right: 20px; border: 1px dashed #ccc;'" v-for="(guide, key) in selectedBrand.guides" :key="key">
+                    <b-card-body v-if="selectedBrand.banner" class="banner p-0 position-relative" :style="'width: calc('+ selectedBrand.width +'px); margin-bottom: 30px;'">
+                        <b-card-img :src="selectedBrand.banner" class="rounded-0" />
+                        <b-dropdown class="position-absolute" style="right:0; bottom: 0;" no-caret toggle-class="p-1 border-0" menu-class="shadow" size="sm" variant="link" right>
+                            <template v-slot:button-content>
+                                <b-icon icon="gear" variant="secondary" />
+                            </template>
+                            <b-dd-item style="font-size: .8rem;" @click="deleteBanner">상단 이미지 삭제</b-dd-item>
+                        </b-dropdown>
+                    </b-card-body>
+                    <b-card-body class="guide py-0 position-relative" :style="'width: calc('+ selectedBrand.width +'px); margin-bottom: 30px; padding-left: 20px; padding-right: 20px; border: 1px dashed #ccc;'" v-for="(guide, key) in selectedBrand.guides" :key="key">
                         <!-- <b-form-group class="mb-0">
                             <b-form-input type="text" class="border-0 px-0 rounded-0" style="border-bottom: 2px solid #2a2a2a !important; line-height: 45px; font-size: 22px; color: #2a2a2a; font-weight: 700;" v-model="guide.title" />
                         </b-form-group> -->
@@ -115,8 +125,6 @@ export default {
     name: 'guide',
     data: function() {
         return {
-            banner: null,
-            width: 860,
             brand: null,
             brands: [],
         }
@@ -136,6 +144,8 @@ export default {
         getGuides: function() {
             const db = firebase.firestore()
             db.collection('brands')
+                .where('deletedAt', '==', null)
+                .orderBy('title', 'asc')
                 .get()
                 .then((querySanp) => {
                     querySanp.docs.forEach(doc => {
@@ -172,7 +182,7 @@ export default {
                     //     // alert('이미지의 넓이가 '+self.selectedChannelWidth+'px 이 아닙니다.')
                     //     self.needConfirmTitlebar = true
                     // }
-                    this.banner = reader.result || null;
+                    this.selectedBrand.banner = reader.result || null;
                 }
                 image.remove()
 
@@ -221,7 +231,10 @@ export default {
             
             preview.querySelectorAll('.guide').forEach(section => {
                 section.style.border = '0px'
-                section.querySelector('.dropdown').style.display = 'none'
+            })
+
+            preview.querySelectorAll('.dropdown').forEach(dropdown => {
+                dropdown.style.display = 'none'
             })
 
             document.documentElement.scrollTop = 0
@@ -246,9 +259,12 @@ export default {
                         URL.revokeObjectURL(url);
                         a.remove()
 
+                        preview.querySelectorAll('.dropdown').forEach(dropdown => {
+                            dropdown.style.display = 'block'
+                        })
+
                         preview.querySelectorAll('.guide').forEach(section => {
                             section.style.border = '1px dashed #ccc'
-                            section.querySelector('.dropdown').style.display = 'block'
                         })
 
                         document.body.classList.remove('overflow-hidden')
@@ -257,6 +273,9 @@ export default {
                 }, "image/jpeg", 1)
             });
 
+        },
+        deleteBanner: function() {
+            this.selectedBrand.banner = null
         }
     }
 }
