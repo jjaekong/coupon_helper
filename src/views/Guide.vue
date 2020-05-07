@@ -1,5 +1,5 @@
 <template>
-    <div class="guide">
+    <div>
 
         <div class="steps border-bottom text-left">
             <b-container>
@@ -7,12 +7,12 @@
                     <b-col cols="4" class="border-left border-right">
                         <b-card class="border-0" style="height: 8rem;" header-class="d-flex align-items-center">
                             <template v-slot:header>
-                                <h6>문구/브랜드 <small class="text-muted">(alt + q)</small></h6>
-                                <b-btn size="sm" variant="link" class="ml-auto border-0 p-0 text-dark" to="/guide/new"><b>새로 추가</b></b-btn>
-                                <b-btn size="sm" variant="link" class="ml-3 border-0 p-0 text-dark" to="/guide/list"><b>목록</b></b-btn>
+                                <h6 class="mb-0">문구/브랜드 <small class="text-muted">(alt + q)</small></h6>
+                                <b-btn size="sm" variant="link" class="ml-auto border-0 p-0 text-dark" to="/guide/new" style="font-size: .8rem;"><b>새로 추가</b></b-btn>
+                                <b-btn size="sm" variant="link" class="ml-3 border-0 p-0 text-dark" to="/guide/list" style="font-size: .8rem;"><b>목록</b></b-btn>
                             </template>
                             <b-form-group>
-                                <b-form-input list="brand-list" size="sm" accesskey="q" placeholder="브랜드명의 일부를 입력하고 선택하세요." v-model="brand" />
+                                <b-form-input list="brand-list" accesskey="b" placeholder="브랜드명의 일부를 입력하고 선택하세요." v-model="brand" />
                                 <b-form-datalist id="brand-list" :options="brandOptions" />
                             </b-form-group>
                         </b-card>
@@ -20,7 +20,7 @@
                     <b-col class="border-right">
                         <b-card class="border-0" style="height: 8rem;">
                             <template v-slot:header>
-                                <h6>넓이 <small class="text-muted">(alt + w, 화살표로 넓이 선택)</small></h6>
+                                <h6 class="mb-0">넓이 <small class="text-muted">(alt + w, 화살표로 넓이 선택)</small></h6>
                             </template>
                             <b-row no-gutters v-if="selectedBrand">
                                 <b-col cols="9" class="d-flex align-items-center">
@@ -35,22 +35,22 @@
                                 </b-col>
                                 <b-col>
                                     <b-form-group class="mb-0">
-                                        <b-form-input type="number" min="0" max="1028" v-model="selectedBrand.width" style="width: 100%;" size="sm" />
+                                        <b-form-input type="number" min="0" max="1028" v-model="selectedBrand.width" style="width: 100%;" />
                                     </b-form-group>
                                 </b-col>
                             </b-row>
-                            <b-card-text class="text-muted" v-else>먼저 브랜드를 선택하세요</b-card-text>
+                            <b-card-text class="text-muted" v-else>먼저 문구/브랜드를 선택하세요.</b-card-text>
                         </b-card>
                     </b-col>
                     <b-col class="border-right">
                         <b-card class="border-0" style="height: 8rem;">
                             <template v-slot:header>
-                                <h6>상단 이미지 <small class="text-muted">(alt + t)</small></h6>
+                                <h6 class="mb-0">상단 이미지 <small class="text-muted">(alt + t)</small></h6>
                             </template>
                             <b-form-group class="mb-0" v-if="selectedBrand">
-                                <b-form-file size="sm" accept="image/*" accesskey="t" @input="selectBanner" placeholder="상단 이미지 선택" />
+                                <b-form-file accept="image/*" accesskey="i" @input="selectBanner" placeholder="상단 이미지 선택" />
                             </b-form-group>
-                            <b-card-text class="text-muted" v-else>먼저 브랜드를 선택하세요</b-card-text>
+                            <b-card-text class="text-muted" v-else>먼저 문구/브랜드를 선택하세요.</b-card-text>
                         </b-card>
                     </b-col>
                 </b-row>
@@ -59,7 +59,7 @@
 
         <b-container class="my-4" v-if="selectedBrand != null">
 
-            <b-card no-body class="mx-auto border-secondary" :style="'width: calc('+ selectedBrand.width +'px + 2px + 1.25rem * 2); padding: 1.25rem'">
+            <b-card no-body class="mx-auto" :style="'width: calc('+ selectedBrand.width +'px + 2px + 1.25rem * 2); padding: 1.25rem'">
 
                 <div class="preview text-left">
                     <b-card-body v-if="selectedBrand.banner" class="banner p-0 position-relative" :style="'width: calc('+ selectedBrand.width +'px); margin-bottom: 30px;'">
@@ -104,7 +104,7 @@
 
             </b-card>
 
-            <b-row class="mt-3">
+            <b-row class="mt-4 mb-5">
                 <b-col>
                     <b-btn class="mx-1" @click="showBrandHtml()">전체 HTML 소스보기</b-btn>
                     <b-btn class="mx-1" @click="saveBrandToImage()">전체 이미지 저장</b-btn>

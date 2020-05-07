@@ -3,20 +3,11 @@
         <header id="header">
             <b-container>
                 <b-navbar type="dark" variant="info">
-                    <b-navbar-brand to="/"><small>Coupon Helper</small></b-navbar-brand>
+                    <b-navbar-brand to="/">옴니텔 쿠폰업무도구</b-navbar-brand>
                     <b-navbar-nav>
-                        <b-nav-item to="/guide">이용안내</b-nav-item>
-                        <b-nav-item to="/thumbnail">썸네일</b-nav-item>
+                        <b-nav-item to="/guide" exact>이용안내</b-nav-item>
+                        <b-nav-item to="/thumbnail" exact>썸네일</b-nav-item>
                         <!-- <b-nav-item to="search">썸네일 검색</b-nav-item> -->
-                    </b-navbar-nav>
-                    <b-navbar-nav class="ml-auto">
-                        <!-- <b-nav-item-dropdown text="Lang" right v-if="isLoggedIn">
-                            <b-dropdown-item href="#">EN</b-dropdown-item>
-                            <b-dropdown-item href="#">ES</b-dropdown-item>
-                            <b-dropdown-item href="#">RU</b-dropdown-item>
-                            <b-dropdown-item href="#">FA</b-dropdown-item>
-                        </b-nav-item-dropdown>
-                        <b-btn size="sm" v-else>로그인</b-btn> -->
                     </b-navbar-nav>
                 </b-navbar>
             </b-container>
@@ -45,5 +36,8 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+}
+.router-link-active {
+    color: #fff!important;
 }
 </style>
