@@ -3,7 +3,7 @@
         <div class="steps border-bottom text-left">
             <b-container>
                 <b-row no-gutters>
-                    <b-col cols="3" class="border-left border-right">
+                    <b-col class="border-left border-right">
                         <b-card class="border-0" style="height: 8rem;">
                             <template v-slot:header>
                                 <h6 class="mb-0">이미지 선택 <small class="text-muted">(Alt + i)</small></h6>
@@ -13,7 +13,7 @@
                             </b-form-group>
                         </b-card>
                     </b-col>
-                    <b-col cols="3" class="border-right">
+                    <!-- <b-col cols="3" class="border-right">
                         <b-card class="border-0" style="height: 8rem;">
                             <template v-slot:header>
                                 <h6 class="mb-0">이미지 확대/축소 <small class="text-muted">(Alt + c)</small></h6>
@@ -22,7 +22,7 @@
                                 <b-form-input type="number" id="scale" accesskey="c" min="0.1" max="10" step=".1" v-model="scale" />
                             </b-form-group>
                         </b-card>
-                    </b-col>
+                    </b-col> -->
                     <b-col class="border-right">
                         <b-card class="border-0" style="height: 8rem;">
                             <template v-slot:header>
@@ -39,24 +39,8 @@
 
         <b-container class="py-4 my-4">
             <b-row>
-                <b-col cols="8">
-                    <b-card no-body style="width: calc(640px + 2px); height: calc(640px + 2px); padding: 0" class="ml-auto rounded-0">
-                        <div class="preview position-relative overflow-hidden">
-                            <b-card-body style="width: 640px; height: 640px;" class="bg-white p-0 d-flex align-items-center justify-content-center">
-                                <b-img :src="image" v-if="image" :style="{ 'position': 'relative', 'transform': 'scale('+ scale +')', 'top' : top +'px', 'left' : left +'px'} " />
-                                <p class="mb-0" v-else>
-                                    이미지를 선택하세요.
-                                </p>
-                            </b-card-body>
-                            <div class="guideline" style="width: 500px; height: 500px; border: 2px dashed #eee; position: absolute; top: 70px; left: 70px; z-idnex: 999;" v-if="visibleGuideline">
-                                <span style="position: absolute; top: calc(50% - 1px); left: 0; width: 100%; height: 0; border-top: 2px dashed #eee;" />
-                                <span style="position: absolute; top: 0; left: calc(50% - 1px); width: 0; height: 100%; border-left: 2px dashed #eee;" />
-                            </div>
-                        </div>
-                    </b-card>
-                </b-col>
-                <b-col cols="3">
-                    <b-card no-body class="mb-3">
+                <b-col>
+                    <b-card no-body>
                         <b-card-header>
                                 단축키
                         </b-card-header>
@@ -72,11 +56,67 @@
                             <b-list-group-item class="p-2"><small>Alt+(s): 이미지 저장</small></b-list-group-item>
                         </b-list-group>
                     </b-card>
+                </b-col>
+                <b-col cols="7">
+                    <b-card no-body style="width: calc(640px + 2px); height: calc(640px + 2px); padding: 0" class="mx-auto rounded-0">
+                        <div class="preview position-relative overflow-hidden">
+                            <b-card-body style="width: 640px; height: 640px;" class="bg-white p-0 d-flex align-items-center justify-content-center">
+                                <b-img :src="image" v-if="image" :style="{ 'position': 'relative', 'transform': 'scale('+ scale +')', 'top' : top +'px', 'left' : left +'px'} " />
+                                <p class="mb-0" v-else>
+                                    이미지를 선택하세요.
+                                </p>
+                            </b-card-body>
+                            <div class="guideline" style="width: 500px; height: 500px; border: 2px dashed #eee; position: absolute; top: 70px; left: 70px; z-idnex: 999;" v-if="visibleGuideline">
+                                <span style="position: absolute; top: calc(50% - 1px); left: 0; width: 100%; height: 0; border-top: 2px dashed #eee;" />
+                                <span style="position: absolute; top: 0; left: calc(50% - 1px); width: 0; height: 100%; border-left: 2px dashed #eee;" />
+                            </div>
+                        </div>
+                    </b-card>
+                </b-col>
+                <b-col>
+                    <b-card class="mb-3">
+                        <template v-slot:header>
+                            확대/축소
+                        </template>
+                        <b-form-group>
+                            <!-- <b-form-input type="number" min="0" max="1" /> -->
+                            <b-form-input type="number" id="scale" accesskey="c" min="0.1" max="10" step=".1" v-model="scale" />
+                        </b-form-group>
+                        <b-row no-gutters>
+                            <b-col><b-btn @click="scaleTo(-0.1)" size="sm" class="p-1">-0.1</b-btn></b-col>
+                            <b-col><b-btn @click="scaleTo(-0.01)" size="sm" class="p-1">-0.01</b-btn></b-col>
+                            <b-col><b-btn @click="scaleTo(0.01)" size="sm" class="p-1">+0.01</b-btn></b-col>
+                            <b-col><b-btn @click="scaleTo(0.1)" size="sm" class="p-1">+0.1</b-btn></b-col>
+                        </b-row>
+                    </b-card>
+                    <b-card class="mb-3">
+                        <template v-slot:header>
+                            위치
+                        </template>
+                        <b-row no-gutters class="py-1">
+                            <b-col class="text-center"><b-btn @click="moveToTop(-10)" size="sm">10</b-btn></b-col>
+                        </b-row>
+                        <b-row no-gutters class="py-1">
+                            <b-col class="text-center"><b-btn @click="moveToTop(-1)" size="sm">1</b-btn></b-col>
+                        </b-row>
+                        <b-row no-gutters class="py-1">
+                            <b-col><b-btn @click="moveToLeft(-10)" size="sm">10</b-btn></b-col>
+                            <b-col><b-btn @click="moveToLeft(-1)" size="sm">1</b-btn></b-col>
+                            <b-col><b-btn @click="resetPos()" size="sm">0</b-btn></b-col>
+                            <b-col><b-btn @click="moveToLeft(1)" size="sm">1</b-btn></b-col>
+                            <b-col><b-btn @click="moveToLeft(10)" size="sm">10</b-btn></b-col>
+                        </b-row>
+                        <b-row no-gutters class="py-1">
+                            <b-col class="text-center"><b-btn @click="moveToTop(1)" size="sm">1</b-btn></b-col>
+                        </b-row>
+                        <b-row no-gutters class="py-1">
+                            <b-col class="text-center"><b-btn @click="moveToTop(10)" size="sm">10</b-btn></b-col>
+                        </b-row>
+                    </b-card>
                     <!-- <b-btn block class="mb-2" @click="toggleGuideline" variant="">가이드 <span v-text="visibleGuideline ? '끄기' : '켜기'"></span></b-btn> -->
                     <b-form-group>
                         <b-form-checkbox switch v-model="visibleGuideline" accesskey="g">가이드라인 <small class="text-muted">(alt + g)</small></b-form-checkbox>
                     </b-form-group>
-                    <b-form-text>이미지를 저장하기 전에<br>반드시 가이드라인을 끄고 저장하세요.</b-form-text>
                     <b-btn class="mt-3" block variant="primary" @click="saveThumbnails" accesskey="s">이미지 저장 <small>(Alt + s)</small></b-btn>
                 </b-col>
             </b-row>
@@ -97,7 +137,7 @@ export default {
             scale: 1,
             sizes: [640],
             savedScale: 1,
-            visibleGuideline: false
+            visibleGuideline: true
         }
     },
     created: function() {
@@ -235,36 +275,67 @@ export default {
                 return;
             }
 
+            let visibleGuideline = this.visibleGuideline
+
+            this.visibleGuideline = false
+
             document.documentElement.scrollTop = 0
 
-            const prevew = document.querySelector('.preview')
+            const preview = document.querySelector('.preview')
 
-            this.sizes.forEach(size => {
-                if (size > 0) {
-                    html2canvas(prevew, { scale: size / 640 }).then((canvas) => {
-                        // console.log(canvas, size, 1 - (size / 3840))
-                        canvas.toBlob((blob) => {
-                            let reader = new FileReader()
-                            reader.readAsDataURL(blob)
-                            reader.addEventListener("load", () => {
+            let results = new Array()
+            
+            this.sizes.forEach(() => {
+               results.push(false) 
+            });
 
-                                let url = URL.createObjectURL(blob);
-                                let a = document.createElement("a")
-                                a.setAttribute("style", "display: none")
-                                a.setAttribute("href", url)
-                                a.setAttribute("target", "_blank")
-                                a.setAttribute("download", this.file.name.substring(0, this.file.name.lastIndexOf('.')) +'_'+ size +'.'+ this.file.name.substring(this.file.name.lastIndexOf('.') + 1, this.file.name.length))
-                                document.body.appendChild(a)
-                                a.click()
-                                URL.revokeObjectURL(url);
-                                a.remove()
+            setTimeout(() => {
+                this.sizes.forEach((size, index) => {
+                    if (size > 0) {
+                        html2canvas(preview, { scale: size / 640 }).then((canvas) => {
+                            // console.log(canvas, size, 1 - (size / 3840))
+                            canvas.toBlob((blob) => {
+                                let reader = new FileReader()
+                                reader.readAsDataURL(blob)
+                                reader.addEventListener("load", () => {
 
-                            }, false)
-                        }, this.file.type, 1 - (size / 3840))
-                    });
-                }
+                                    let url = URL.createObjectURL(blob);
+                                    let a = document.createElement("a")
+                                    a.setAttribute("style", "display: none")
+                                    a.setAttribute("href", url)
+                                    a.setAttribute("target", "_blank")
+                                    a.setAttribute("download", this.file.name.substring(0, this.file.name.lastIndexOf('.')) +'_'+ size +'.jpg')
+                                    document.body.appendChild(a)
+                                    a.click()
+                                    URL.revokeObjectURL(url);
+                                    a.remove()
+
+                                    results[index] = true
+
+                                }, false)
+                            }, 'image/jpeg', 1 - (size / 640 * 6))
+                        });
+                    } else {
+                        results[index] = true
+                    }
+                })
+            }, 500)
+
+            new Promise((resolve) => {
+                const interval = setInterval(() => {
+                    if (results.every(result => result == true)) {
+                        clearInterval(interval)
+                        resolve()
+                    }
+                }, 10)
             })
-
+            .then(() => {
+                this.visibleGuideline = visibleGuideline
+            })
+            .catch((error) => {
+                console.log(error)
+                this.visibleGuideline = visibleGuideline
+            })
         },
         moveToLeft: function(left) {
             this.left += left
@@ -275,6 +346,9 @@ export default {
         resetPos: function() {
             this.left = 0
             this.top = 0
+        },
+        scaleTo: function(scale) {
+            this.scale += scale
         },
     }
 }
