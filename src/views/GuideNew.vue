@@ -34,11 +34,20 @@
                         </b-form-row>
                     </b-form-group>
                     <b-form-group>
-                        <b-form-file placeholder="상단 이미지 선택" @input="selectBanner" accept="image/*" />
-                        <b-card-img :src="banner" v-if="banner" class="rounded-0 mt-3" />
-                        <b-row v-if="banner">
+                        <b-form-file placeholder="상단 이미지 선택" @input="selectTopBanner" accept="image/*" />
+                        <b-card-img :src="topBanner" v-if="topBanner" class="rounded-0 mt-3" />
+                        <b-row v-if="topBanner">
                             <b-col class="text-right">
-                                <b-btn size="sm" variant="link" class="px-0" @click="deleteBanner">상단 이미지 삭제</b-btn>
+                                <b-btn size="sm" variant="link" class="px-0" @click="deleteTopBanner">상단 이미지 삭제</b-btn>
+                            </b-col>
+                        </b-row>
+                    </b-form-group>
+                    <b-form-group>
+                        <b-form-file placeholder="중단 이미지 선택" @input="selectMidBanner" accept="image/*" />
+                        <b-card-img :src="midBanner" v-if="midBanner" class="rounded-0 mt-3" />
+                        <b-row v-if="midBanner">
+                            <b-col class="text-right">
+                                <b-btn size="sm" variant="link" class="px-0" @click="deleteMidBanner">중단 이미지 삭제</b-btn>
                             </b-col>
                         </b-row>
                     </b-form-group>
@@ -72,7 +81,8 @@ export default {
     name: 'guide-new',
     data: function() {
         return {
-            banner: null,
+            topBanner: null,
+            midBanner: null,
             title: null,
             width: 860,
             writer: null,
@@ -102,7 +112,8 @@ export default {
             const db = firebase.firestore()
 
             db.collection('brands').add({
-                banner: this.banner,
+                topBanner: this.topBanner,
+                midBanner: this.midBanner,
                 width: this.width,
                 title: this.title,
                 writer: this.writer,
@@ -111,7 +122,8 @@ export default {
                 deletedAt: null,
             }).then((doc) => {
                 db.collection('brands').doc(doc.id).collection('histories').add({
-                    banner: this.banner,
+                    topBanner: this.topBanner,
+                    midBanner: this.midBanner,
                     width: this.width,
                     title: this.title,
                     writer: this.writer,   
@@ -127,7 +139,7 @@ export default {
                 console.log(error)
             })
         },
-        selectBanner: function(file) {
+        selectTopBanner: function(file) {
             // 파일이 선택되었는지
             if (!file) {
                 return false;
@@ -145,15 +157,43 @@ export default {
                 const image = new Image()
                 image.src = reader.result
                 image.onload = () => {
-                    this.banner = reader.result || null;
+                    this.topBanner = reader.result || null;
                 }
                 image.remove()
 
             }, false)
 
         },
-        deleteBanner: function() {
-            this.banner = null
+        deleteTopBanner: function() {
+            this.topBanner = null
+        },
+        selectMidBanner: function(file) {
+            // 파일이 선택되었는지
+            if (!file) {
+                return false;
+            }
+            // 선택한 파일이 이미지인지
+            if (file.type.indexOf("image") < 0) {
+                alert('이미지를 선택하세요.');
+                return false;
+            }
+            // 선택한 이미지 읽어와서 화면에 출력하기
+            const reader = new FileReader()
+
+            reader.readAsDataURL(file)
+            reader.addEventListener("load", () => {
+                const image = new Image()
+                image.src = reader.result
+                image.onload = () => {
+                    this.midBanner = reader.result || null;
+                }
+                image.remove()
+
+            }, false)
+
+        },
+        deleteMidBanner: function() {
+            this.midBanner = null
         }
     }
 }

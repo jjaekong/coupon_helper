@@ -5,8 +5,8 @@
                 <b-navbar type="dark" variant="info">
                     <b-navbar-brand to="/">옴니텔 쿠폰업무도구</b-navbar-brand>
                     <b-navbar-nav>
-                        <b-nav-item to="/guide" exact>이용안내</b-nav-item>
-                        <b-nav-item to="/thumbnail" exact>썸네일</b-nav-item>
+                        <b-nav-item to="/guide" exact>이용안내 만들기</b-nav-item>
+                        <b-nav-item to="/thumbnail" exact>썸네일 리사이징</b-nav-item>
                         <!-- <b-nav-item to="search">썸네일 검색</b-nav-item> -->
                     </b-navbar-nav>
                 </b-navbar>

@@ -2,12 +2,12 @@
     <b-container>
         <b-row class="pt-3 pb-2 align-items-center">
             <b-col class="text-left">
-                총 <b>{{items.length}}</b>개
-            </b-col>
-            <b-col>
-                <b-input-group class="w-50 float-right">
+                <b-input-group class="w-50">
                     <b-form-input v-model="filter" type="search" placeholder="필터(alt + s)" accesskey="s" />
                 </b-input-group>
+            </b-col>
+            <b-col class="text-right">
+                <b-btn to="/guide/new" variant="primary">새로 등록</b-btn>
             </b-col>
         </b-row>
         <b-table striped hover :caption-top="true" :fields="fields" :items="items" :filter="filter" v-if="this.items.length > 0">

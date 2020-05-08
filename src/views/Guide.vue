@@ -4,7 +4,7 @@
         <div class="steps border-bottom text-left">
             <b-container>
                 <b-row no-gutters>
-                    <b-col cols="4" class="border-left border-right">
+                    <b-col class="border-left border-right">
                         <b-card class="border-0" style="height: 8rem;" header-class="d-flex align-items-center">
                             <template v-slot:header>
                                 <h6 class="mb-0">문구/브랜드 <small class="text-muted">(alt + q)</small></h6>
@@ -23,7 +23,7 @@
                                 <h6 class="mb-0">넓이 <small class="text-muted">(alt + w, 화살표로 넓이 선택)</small></h6>
                             </template>
                             <b-row no-gutters v-if="selectedBrand">
-                                <b-col cols="9" class="d-flex align-items-center">
+                                <b-col cols="8" class="d-flex align-items-center">
                                     <b-form-group class="mb-0">
                                         <b-form-radio-group v-model="selectedBrand.width" size="sm">
                                             <b-form-radio :value="684" accesskey="w">684</b-form-radio>
@@ -48,7 +48,18 @@
                                 <h6 class="mb-0">상단 이미지 <small class="text-muted">(alt + t)</small></h6>
                             </template>
                             <b-form-group class="mb-0" v-if="selectedBrand">
-                                <b-form-file accept="image/*" accesskey="i" @input="selectBanner" placeholder="상단 이미지 선택" />
+                                <b-form-file accept="image/*" accesskey="t" @input="selectTopBanner" placeholder="상단 이미지 선택" />
+                            </b-form-group>
+                            <b-card-text class="text-muted" v-else>먼저 문구/브랜드를 선택하세요.</b-card-text>
+                        </b-card>
+                    </b-col>
+                    <b-col class="border-right">
+                        <b-card class="border-0" style="height: 8rem;">
+                            <template v-slot:header>
+                                <h6 class="mb-0">중단 이미지 <small class="text-muted">(alt + m)</small></h6>
+                            </template>
+                            <b-form-group class="mb-0" v-if="selectedBrand">
+                                <b-form-file accept="image/*" accesskey="m" @input="selectMidBanner" placeholder="중단 이미지 선택" />
                             </b-form-group>
                             <b-card-text class="text-muted" v-else>먼저 문구/브랜드를 선택하세요.</b-card-text>
                         </b-card>
@@ -59,19 +70,28 @@
 
         <b-container class="my-4" v-if="selectedBrand != null">
 
-            <b-card no-body class="mx-auto" :style="'width: calc('+ selectedBrand.width +'px + 2px + 1.25rem * 2); padding: 1.25rem'">
+            <b-card no-body class="mx-auto rounded-0" :style="'width: calc('+ selectedBrand.width +'px + 2px);'">
 
                 <div class="preview text-left">
-                    <b-card-body v-if="selectedBrand.banner" class="banner p-0 position-relative" :style="'width: calc('+ selectedBrand.width +'px); margin-bottom: 30px;'">
-                        <b-card-img :src="selectedBrand.banner" class="rounded-0" />
-                        <b-dropdown class="position-absolute" style="right:0; bottom: 0;" no-caret toggle-class="p-1 border-0" menu-class="shadow" size="sm" variant="link" right>
+                    <b-card-body v-if="selectedBrand.topBanner" class="banner p-0 position-relative" :style="'width: calc('+ selectedBrand.width +'px);'">
+                        <b-card-img :src="selectedBrand.topBanner" class="rounded-0" />
+                        <b-dropdown class="position-absolute" style="right:0; bottom: 0;" no-caret toggle-class="p-2 border-0" menu-class="shadow" size="sm" variant="link" right>
                             <template v-slot:button-content>
                                 <b-icon icon="gear" variant="secondary" />
                             </template>
-                            <b-dd-item style="font-size: .8rem;" @click="deleteBanner">상단 이미지 삭제</b-dd-item>
+                            <b-dd-item style="font-size: .8rem;" @click="deleteTopBanner">상단 이미지 삭제</b-dd-item>
                         </b-dropdown>
                     </b-card-body>
-                    <b-card-body class="guide py-0 position-relative" :style="'width: calc('+ selectedBrand.width +'px); margin-bottom: 30px; padding-left: 20px; padding-right: 20px; border: 1px dashed #ccc;'" v-for="(guide, key) in selectedBrand.guides" :key="key">
+                    <b-card-body v-if="selectedBrand.midBanner" class="banner p-0 position-relative" :style="'width: calc('+ selectedBrand.width +'px);'">
+                        <b-card-img :src="selectedBrand.midBanner" class="rounded-0" />
+                        <b-dropdown class="position-absolute" style="right:0; bottom: 0;" no-caret toggle-class="p-2 border-0" menu-class="shadow" size="sm" variant="link" right>
+                            <template v-slot:button-content>
+                                <b-icon icon="gear" variant="secondary" />
+                            </template>
+                            <b-dd-item style="font-size: .8rem;" @click="deleteMidBanner">중단 이미지 삭제</b-dd-item>
+                        </b-dropdown>
+                    </b-card-body>
+                    <b-card-body class="guide py-0 position-relative" :style="'width: calc('+ selectedBrand.width +'px); margin-top: 30px; padding-left: 20px; padding-right: 20px;'" v-for="(guide, key) in selectedBrand.guides" :key="key">
                         <!-- <b-form-group class="mb-0">
                             <b-form-input type="text" class="border-0 px-0 rounded-0" style="border-bottom: 2px solid #2a2a2a !important; line-height: 45px; font-size: 22px; color: #2a2a2a; font-weight: 700;" v-model="guide.title" />
                         </b-form-group> -->
@@ -80,7 +100,7 @@
                         </b-form-group> -->
                         <h4 class="mb-0" style="border-bottom: 2px solid #2a2a2a !important; line-height: 45px; font-size: 22px; color: #2a2a2a; font-weight: 700;">{{guide.title}}</h4>
                         <div style="padding-top: 20px; padding-bottom: 20px; font-size: 16px; line-height: 26px; color: #605f5f; white-space: pre-wrap;" v-text="guide.text"></div>
-                        <b-dropdown class="position-absolute" style="right:0; bottom: 0;" no-caret toggle-class="p-1 border-0" menu-class="shadow" size="sm" variant="link" right>
+                        <b-dropdown class="position-absolute" style="right: 1.5rem; top: .75rem;" no-caret toggle-class="p-1 border-0" menu-class="shadow" size="sm" variant="link" right>
                             <template v-slot:button-content>
                                 <b-icon icon="gear" variant="secondary" />
                             </template>
@@ -88,7 +108,7 @@
                             <b-dd-item style="font-size: .8rem;" @click="saveGuideToImage(key)">이미지로 저장</b-dd-item>
                         </b-dropdown>
                     </b-card-body>
-                    <b-card-body class="contact">
+                    <b-card-body class="contact" style="margin-top: 30px">
                         <b-row>
                             <b-col class="text-left">
                                 <p class="mb-0">발행자: ㈜옴니텔</p>
@@ -157,7 +177,7 @@ export default {
                     })
                 })
         },
-        selectBanner: function(file) {
+        selectTopBanner: function(file) {
             // 파일이 선택되었는지
             if (!file) {
                 return false;
@@ -175,14 +195,32 @@ export default {
                 const image = new Image()
                 image.src = reader.result
                 image.onload = () => {
-                    // console.log('load image ==> ', image, image.width)
-                    // if (this.width == self.selectedChannelWidth) {
-                    //     self.selectedTitleFileName = $event.target.files[0].name
-                    // } else {
-                    //     // alert('이미지의 넓이가 '+self.selectedChannelWidth+'px 이 아닙니다.')
-                    //     self.needConfirmTitlebar = true
-                    // }
-                    this.selectedBrand.banner = reader.result || null;
+                    this.selectedBrand.topBanner = reader.result || null;
+                }
+                image.remove()
+
+            }, false)
+
+        },
+        selectMidBanner: function(file) {
+            // 파일이 선택되었는지
+            if (!file) {
+                return false;
+            }
+            // 선택한 파일이 이미지인지
+            if (file.type.indexOf("image") < 0) {
+                alert('이미지를 선택하세요.');
+                return false;
+            }
+            // 선택한 이미지 읽어와서 화면에 출력하기
+            const reader = new FileReader()
+
+            reader.readAsDataURL(file)
+            reader.addEventListener("load", () => {
+                const image = new Image()
+                image.src = reader.result
+                image.onload = () => {
+                    this.selectedBrand.midBanner = reader.result || null;
                 }
                 image.remove()
 
@@ -193,7 +231,7 @@ export default {
 
             const guide = document.querySelectorAll('.guide')[key]
 
-            guide.style.border = '0px'
+            // guide.style.border = '0px'
             guide.querySelector('.dropdown').style.display = 'none'
 
             document.documentElement.scrollTop = 0
@@ -217,7 +255,7 @@ export default {
                         URL.revokeObjectURL(url);
                         a.remove()
 
-                        guide.style.border = '1px dashed #ccc'
+                        // guide.style.border = '1px dashed #ccc'
                         guide.querySelector('.dropdown').style.display = 'block'
 
                     }, false)
@@ -229,9 +267,9 @@ export default {
 
             const preview = document.querySelector('.preview')
             
-            preview.querySelectorAll('.guide').forEach(section => {
-                section.style.border = '0px'
-            })
+            // preview.querySelectorAll('.guide').forEach(section => {
+            //     section.style.border = '0px'
+            // })
 
             preview.querySelectorAll('.dropdown').forEach(dropdown => {
                 dropdown.style.display = 'none'
@@ -263,9 +301,9 @@ export default {
                             dropdown.style.display = 'block'
                         })
 
-                        preview.querySelectorAll('.guide').forEach(section => {
-                            section.style.border = '1px dashed #ccc'
-                        })
+                        // preview.querySelectorAll('.guide').forEach(section => {
+                        //     section.style.border = '1px dashed #ccc'
+                        // })
 
                         document.body.classList.remove('overflow-hidden')
 
@@ -274,8 +312,11 @@ export default {
             });
 
         },
-        deleteBanner: function() {
-            this.selectedBrand.banner = null
+        deleteTopBanner: function() {
+            this.selectedBrand.topBanner = null
+        },
+        deleteMidBanner: function() {
+            this.selectedBrand.midBanner = null
         },
         showBrandHtml: function() {
             console.log('showBrandHtml')
