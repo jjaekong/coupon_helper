@@ -111,12 +111,12 @@
                     <b-card-body class="contact" style="margin-top: 30px">
                         <b-row>
                             <b-col class="text-left">
-                                <p class="mb-0">발행자: ㈜옴니텔</p>
+                                <p class="mb-0">발행자: ㈜티사이언티픽</p>
                                 <p class="mb-0">고객센터: 1588-5639</p>
                                 <p class="mb-0">운영시간: 09:30 ~ 18:00 / 토, 일, 공휴일 휴무</p>
                             </b-col>
                             <b-col class="text-right">
-                                <b-img :src="require('@/assets/logo.gif')" />
+                                <b-img :src="require('@/assets/logo_tsc.jpg')" />
                             </b-col>
                         </b-row>
                     </b-card-body>
