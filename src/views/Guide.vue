@@ -12,7 +12,7 @@
                                 <b-btn size="sm" variant="link" class="ml-3 border-0 p-0 text-dark" to="/guide/list" style="font-size: .8rem;"><b>목록</b></b-btn>
                             </template>
                             <b-form-group>
-                                <b-form-input list="brand-list" accesskey="b" placeholder="브랜드명의 일부를 입력하고 선택하세요." v-model="brand" />
+                                <b-form-input type="search" list="brand-list" accesskey="b" placeholder="브랜드명의 일부를 입력하고 선택하세요." v-model="brand" />
                                 <b-form-datalist id="brand-list" :options="brandOptions" />
                             </b-form-group>
                         </b-card>

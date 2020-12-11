@@ -7,6 +7,7 @@
                     <b-navbar-nav>
                         <b-nav-item to="/guide" exact>이용안내 만들기</b-nav-item>
                         <b-nav-item to="/thumbnail" exact>썸네일 리사이징</b-nav-item>
+                        <b-nav-item to="/template" exact>템플릿 만들기</b-nav-item>
                         <!-- <b-nav-item to="search">썸네일 검색</b-nav-item> -->
                     </b-navbar-nav>
                 </b-navbar>

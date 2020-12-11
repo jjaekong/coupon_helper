@@ -32,6 +32,11 @@ Vue.use(VueRouter)
         name: 'thumbnail',
         component: () => import('../views/Thumbnail.vue')
     },
+    {
+        path: '/template',
+        name: 'template',
+        component: () => import('../views/Template.vue')
+    },
 
 //   {
 //     path: '/about',

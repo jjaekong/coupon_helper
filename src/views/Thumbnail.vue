@@ -13,23 +13,13 @@
                             </b-form-group>
                         </b-card>
                     </b-col>
-                    <!-- <b-col cols="3" class="border-right">
-                        <b-card class="border-0" style="height: 8rem;">
-                            <template v-slot:header>
-                                <h6 class="mb-0">이미지 확대/축소 <small class="text-muted">(Alt + c)</small></h6>
-                            </template>
-                            <b-form-group class="mb-0">
-                                <b-form-input type="number" id="scale" accesskey="c" min="0.1" max="10" step=".1" v-model="scale" />
-                            </b-form-group>
-                        </b-card>
-                    </b-col> -->
                     <b-col class="border-right">
                         <b-card class="border-0" style="height: 8rem;">
                             <template v-slot:header>
-                                <h6 class="mb-0">출력할 사이즈 <small class="text-muted">(Alt + z, 입력 후 콤마 or 스페이스 or 엔터)</small></h6>
+                                <h6 class="mb-0">출력할 사이즈 <small class="text-muted">(Alt + z, 사이즈 입력 후 엔터)</small></h6>
                             </template>
                             <b-form-group class="mb-0">
-                                <b-form-tags v-model="sizes" input-id="sizes" separator=" ,;" remove-on-delete placeholder="" accesskey="z" input-type="number" />
+                                <b-form-tags v-model="sizes" input-id="sizes" separator=",; " remove-on-delete placeholder="" accesskey="z" input-type="number" />
                             </b-form-group>
                         </b-card>
                     </b-col>
