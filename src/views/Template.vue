@@ -7,9 +7,7 @@
                         <b-col class="border-left border-right">
                             <b-card class="border-0" style="height: 9.5rem;">
                                 <template v-slot:header>
-                                    <div style="height: 1.5rem;">
-                                        <h6 class="mb-0">상품명 입력<small class="text-muted">(Alt + t)</small></h6>
-                                    </div>
+                                    <h6 class="mb-0">상품명 입력<small class="text-muted">(Alt + t)</small></h6>
                                 </template>
                                 <b-form-group class="mb-0">
                                     <b-form-textarea placeholder="상품명" v-model="prodTitle" accesskey="t" rows="2" />
@@ -119,10 +117,18 @@
                     <template>
                         <b-card header="상품이미지 위치" body-class="p-2" class="mb-3">
                             <b-row no-gutters>
+                                <b-col><b-btn size="sm" variant="link" @click="move('-10px', '+10px')"><small><b-icon icon="chevron-double-left" rotate="45" /></small></b-btn></b-col>
+                                <b-col></b-col>
                                 <b-col><b-btn size="sm" variant="link" @click="moveVert('+10px')"><small><b-icon icon="chevron-double-up" /></small></b-btn></b-col>
+                                <b-col></b-col>
+                                <b-col><b-btn size="sm" variant="link" @click="move('+10px', '+10px')"><small><b-icon icon="chevron-double-right" rotate="-45" /></small></b-btn></b-col>
                             </b-row>
                             <b-row no-gutters>
+                                <b-col></b-col>
+                                <b-col><b-btn size="sm" variant="link" @click="move('-1px', '+1px')"><small><b-icon icon="chevron-left" rotate="45" /></small></b-btn></b-col>
                                 <b-col><b-btn size="sm" variant="link" @click="moveVert('+1px')"><small><b-icon icon="chevron-up" /></small></b-btn></b-col>
+                                <b-col><b-btn size="sm" variant="link" @click="move('+1px', '+1px')"><small><b-icon icon="chevron-right" rotate="-45" /></small></b-btn></b-col>
+                                <b-col></b-col>
                             </b-row>
                             <b-row no-gutters>
                                 <b-col><b-btn size="sm" variant="link" @click="moveHori('-10px')"><small><b-icon icon="chevron-double-left" /></small></b-btn></b-col>
@@ -132,10 +138,18 @@
                                 <b-col><b-btn size="sm" variant="link" @click="moveHori('+10px')"><small><b-icon icon="chevron-double-right" /></small></b-btn></b-col>
                             </b-row>
                             <b-row no-gutters>
+                                <b-col></b-col>
+                                <b-col><b-btn size="sm" variant="link" @click="move('-1px', '-1px')"><small><b-icon icon="chevron-left" rotate="-45" /></small></b-btn></b-col>
                                 <b-col><b-btn size="sm" variant="link" @click="moveVert('-1px')"><small><b-icon icon="chevron-down" /></small></b-btn></b-col>
+                                <b-col><b-btn size="sm" variant="link" @click="move('+1px', '-1px')"><small><b-icon icon="chevron-right" rotate="45" /></small></b-btn></b-col>
+                                <b-col></b-col>
                             </b-row>
                             <b-row no-gutters>
+                                <b-col><b-btn size="sm" variant="link" @click="move('-10px', '-10px')"><small><b-icon icon="chevron-double-left" rotate="-45" /></small></b-btn></b-col>
+                                <b-col></b-col>
                                 <b-col><b-btn size="sm" variant="link" @click="moveVert('-10px')"><small><b-icon icon="chevron-double-down" /></small></b-btn></b-col>
+                                <b-col></b-col>
+                                <b-col><b-btn size="sm" variant="link" @click="move('+10px', '-10px')"><small><b-icon icon="chevron-double-right" rotate="45" /></small></b-btn></b-col>
                             </b-row>
                         </b-card>
                         <b-card header="상품이미지 크기" body-class="p-2" class="mb-3">
@@ -272,6 +286,11 @@ export default {
         moveVert: function(n) {
             if (!this.prodImage) return
             this.$refs['prod-image'].style.top = `calc(${this.$refs['prod-image'].style.top} - ${n})`
+        },
+        move: function(left, top) {
+            if (!this.prodImage) return
+            this.$refs['prod-image'].style.left = `calc(${this.$refs['prod-image'].style.left} + ${left})`
+            this.$refs['prod-image'].style.top = `calc(${this.$refs['prod-image'].style.top} - ${top})`
         },
         resetPos: function() {
             if (!this.prodImage) return

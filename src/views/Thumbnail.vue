@@ -69,10 +69,18 @@
                 <b-col>
                     <b-card header="위치" class="mb-3" body-class="p-2">
                         <b-row no-gutters>
+                            <b-col><b-btn variant="link" @click="moveTo(-10, -10)" size="sm"><small><b-icon icon="chevron-double-left" rotate="45" /></small></b-btn></b-col>
+                            <b-col></b-col>
                             <b-col class="text-center"><b-btn variant="link" @click="moveToTop(-10)" size="sm"><small><b-icon icon="chevron-double-up" /></small></b-btn></b-col>
+                            <b-col></b-col>
+                            <b-col><b-btn variant="link" @click="moveTo(10, -10)" size="sm"><small><b-icon icon="chevron-double-right" rotate="-45" /></small></b-btn></b-col>
                         </b-row>
                         <b-row no-gutters>
+                            <b-col></b-col>
+                            <b-col><b-btn variant="link" @click="moveTo(-1, -1)" size="sm"><small><b-icon icon="chevron-left" rotate="45" /></small></b-btn></b-col>
                             <b-col class="text-center"><b-btn variant="link" @click="moveToTop(-1)" size="sm"><small><b-icon icon="chevron-up" /></small></b-btn></b-col>
+                            <b-col><b-btn variant="link" @click="moveTo(1, -1)" size="sm"><small><b-icon icon="chevron-right" rotate="-45" /></small></b-btn></b-col>
+                            <b-col></b-col>
                         </b-row>
                         <b-row no-gutters>
                             <b-col><b-btn variant="link" @click="moveToLeft(-10)" size="sm"><small><b-icon icon="chevron-double-left" /></small></b-btn></b-col>
@@ -82,10 +90,18 @@
                             <b-col><b-btn variant="link" @click="moveToLeft(10)" size="sm"><small><b-icon icon="chevron-double-right" /></small></b-btn></b-col>
                         </b-row>
                         <b-row no-gutters>
+                            <b-col></b-col>
+                            <b-col><b-btn variant="link" @click="moveTo(-1, 1)" size="sm"><small><b-icon icon="chevron-left" rotate="-45" /></small></b-btn></b-col>
                             <b-col class="text-center"><b-btn variant="link" @click="moveToTop(1)" size="sm"><small><b-icon icon="chevron-down" /></small></b-btn></b-col>
+                            <b-col><b-btn variant="link" @click="moveTo(1, 1)" size="sm"><small><b-icon icon="chevron-right" rotate="45" /></small></b-btn></b-col>
+                            <b-col></b-col>
                         </b-row>
                         <b-row no-gutters>
+                            <b-col><b-btn variant="link" @click="moveTo(-10, 10)" size="sm"><small><b-icon icon="chevron-double-left" rotate="-45" /></small></b-btn></b-col>
+                            <b-col></b-col>
                             <b-col class="text-center"><b-btn variant="link" @click="moveToTop(10)" size="sm"><small><b-icon icon="chevron-double-down" /></small></b-btn></b-col>
+                            <b-col></b-col>
+                            <b-col><b-btn variant="link" @click="moveTo(10, 10)" size="sm"><small><b-icon icon="chevron-double-right" rotate="45" /></small></b-btn></b-col>
                         </b-row>
                     </b-card
                     >
@@ -372,6 +388,10 @@ export default {
             this.left += left
         },
         moveToTop: function(top) {
+            this.top += top
+        },
+        moveTo: function(left, top) {
+            this.left += left
             this.top += top
         },
         resetPos: function() {
