@@ -76,7 +76,7 @@
                                     </div>
                                 </template>
                             </template>
-                            <template v-if="tempImageType == 440">
+                            <template v-else-if="tempImageType == 440">
                                 <img :src="tempImage" />
                                 <template v-if="prodImage">
                                     <div class="position-absolute" style="width: 350px; height: 350px; left: 45px; top: 10px; background-color: white"></div><!-- 커버 -->
@@ -88,6 +88,21 @@
                                         class="position-absolute prod-title"
                                         style="width: 365px; height: 72px; left: 30px; top: 400px; font-size: 24px; line-height: 1.5; color: #000; font-family: 'KoPub Dotum', san-serif; white-space: pre-line">
                                         <span style="border-bottom: 2px solid black">{{prodTitle}}</span>
+                                    </div>
+                                </template>
+                            </template>
+                            <template v-else-if="tempImageType == 320">
+                                <img :src="tempImage" />
+                                <template v-if="prodImage">
+                                    <div class="position-absolute" style="width: 98px; height: 98px; left: 22px; top: 31px; background-color: white"></div><!-- 커버 -->
+                                    <div class="position-absolute" style="width: 169px; height: 34px; left: 130px; top: 38px; background-color: white"></div><!-- 커버 -->
+                                    <div v-if="prodImage" class="prod-image position-absolute overflow-hidden" :style="{ 'width': this.prodImageSize.width+'px', 'height': this.prodImageSize.height+'px', 'left': this.prodImagePos.left+'px', 'top': this.prodImagePos.top+'px'}">
+                                        <b-img :src="prodImage" class="position-absolute w-100 h-100" :style="{ 'left': this.prodImageOffset.left+'px', 'top': this.prodImageOffset.top+'px', 'transform': `scale(${this.prodImageScale})` }" />
+                                    </div>
+                                    <div v-if="prodTitle"
+                                        class="position-absolute prod-title"
+                                        style="width: 169px; height: 34px; left: 130px; top: 38px; font-size: 15px; line-height: 18px; color: #333; font-weight: 400; font-family: 'KoPub Dotum', san-serif; text-shadow: rgba(20, 20, 20, .5) 0px 0px 1px; white-space: pre-line">
+                                        {{prodTitle}}
                                     </div>
                                 </template>
                             </template>
@@ -353,7 +368,7 @@ export default {
                 image.src = reader.result
                 image.onload = () => {
 
-                    if (image.width != 440 && image.width != 370 && image.width != 232) {
+                    if (image.width != 440 && image.width != 370 && image.width != 232 && image.width != 320) {
                          alert('올바른 템플릿 사이즈가 아닙니다.')
                          return
                     }
@@ -365,17 +380,37 @@ export default {
                         this.prodDefaultSize = { width: 350, height: 350 }
                         this.prodDefaultPos = { left: 45, top: 10 }
                         this.prodDefaultOffset = { left: 0, top: 0 }
+                        this.prodImages.forEach(img => {
+                            console.log('440 img ==> ', img)
+                        })
                     } else if (image.width == 370) { // 예스쿠폰 NEW
                         this.tempImageType = 370
                         this.prodDefaultSize = { width: 190, height: 190 }
                         this.prodDefaultPos = { left: 90, top: 68 }
                         this.prodDefaultOffset = { left: 0, top: 0 }
+                        this.prodImages.forEach(img => {
+                            console.log('370 img ==> ', img)
+                        })
                     } else if (image.width == 232) { // 예스쿠폰 OLD
                         this.tempImageType = 232
                         this.prodDefaultSize = { width: 104, height: 98 }
                         this.prodDefaultPos = { left: 0, top: 26 }
                         this.prodDefaultOffset = { left: 0, top: 0 }
+                        this.prodImages.forEach(img => {
+                            console.log('232 img ==> ', img)
+                        })
+                    } else if (image.width == 320) {
+                        this.tempImageType = 320
+                        this.prodDefaultSize = { width: 98, height: 98 }
+                        this.prodDefaultPos = { left: 22, top: 31 }
+                        this.prodDefaultOffset = { left: 0, top: 0 }
                     }
+
+                    this.prodImages.forEach(img => {
+                        img.prodImagePos = this.prodDefaultPos        
+                        img.prodImageSize = this.prodDefaultSize
+                        img.prodImageOffset = this.prodDefaultOffset
+                    })
 
                 }
                 image.remove()
@@ -519,19 +554,20 @@ export default {
                     }, false)
                 }, this.tempFile.type, 1)
 
+                if (this.prodIndex < this.prodImages.length - 1) {
+                    setTimeout(() => {
+                        this.prodIndex += 1
+                    }, 500)
+                    setTimeout(() => {
+                        this.downloadTemplate()
+                    }, 1000)
+                } else {
+                    setTimeout(() => {
+                        document.documentElement.classList.remove('overflow-hidden')
+                    }, 500)
+                }
+
             });
-
-            if (this.prodIndex < this.prodImages.length - 1) {
-                setTimeout(() => {
-                    this.prodIndex += 1
-                    this.downloadTemplate()
-                }, 1000)
-            } else {
-                setTimeout(() => {
-                    document.documentElement.classList.remove('overflow-hidden')
-                }, 500)
-            }
-
         }
     }
 }
